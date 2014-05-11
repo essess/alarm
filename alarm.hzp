@@ -1,0 +1,105 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="alarm" target="8" version="2">
+  <project Name="alarm">
+    <configuration
+      Name="Common"
+      Target="LPC1114"
+      arm_architecture="v6M"
+      arm_core_type="Cortex-M0"
+      arm_gcc_target="arm-unknown-eabi"
+      arm_interwork="No"
+      arm_linker_gap_fill="0xff"
+      arm_linker_heap_size="0"
+      arm_linker_stack_size="1024"
+      arm_simulator_memory_simulation_filename="$(TargetsDir)/LPC1000/LPC1000SimulatorMemory.dll"
+      arm_simulator_memory_simulation_parameter="LPC11;0x8000;0x2000;0x0"
+      arm_target_debug_interface_type="ADIv5"
+      arm_target_interface_type="SWD"
+      arm_target_loader_parameter="12000000"
+      build_treat_warnings_as_errors="Yes"
+      c_only_additional_options="-fms-extensions"
+      c_preprocessor_definitions="__$(LPC1000_Series)_SERIES;STARTUP_FROM_RESET"
+      c_user_include_directories="$(TargetsDir)/LPC1000/include;$(TargetsDir)/LPC1000/include/CMSIS;$(TargetsDir)/CMSIS_3/CMSIS/Include"
+      gcc_enable_all_warnings="Yes"
+      linker_additional_files="$(TargetsDir)/LPC1000/lib/liblpc1000$(LibExt)$(LIB)"
+      linker_memory_map_file="$(TargetsDir)/LPC1000/LPC1114_MemoryMap.xml"
+      linker_printf_fmt_level="long"
+      linker_printf_fp_enabled="No"
+      linker_printf_width_precision_supported="No"
+      linker_scanf_character_group_matching_enabled="No"
+      linker_scanf_fmt_level="long"
+      linker_scanf_fp_enabled="No"
+      macros="LPC1000_Series=LPC11xx"
+      oscillator_frequency="12MHz"
+      project_type="Executable"
+      property_groups_file_path="$(TargetsDir)/LPC1000/propertyGroups11xx.xml" />
+    <configuration
+      Name="Flash"
+      Placement="Flash"
+      arm_target_flash_loader_file_path="$(TargetsDir)/LPC1000/Release/Loader_lpc1100.elf"
+      arm_target_flash_loader_type="LIBMEM RPC Loader"
+      linker_patch_build_command="&quot;$(StudioDir)/bin/crossscript&quot; &quot;load(\&quot;$(TargetsDir)/LPC1000/LPC1000_LinkPatch.js\&quot;);patch(\&quot;$(TargetPath)\&quot;);&quot;"
+      linker_section_placement_file="$(StudioDir)/targets/Cortex_M/flash_placement.xml"
+      target_reset_script="FLASHReset()" />
+    <configuration
+      Name="RAM"
+      Placement="RAM"
+      linker_section_placement_file="$(StudioDir)/targets/Cortex_M/ram_placement.xml"
+      target_reset_script="SRAMReset()" />
+    <folder Name="Source Files">
+      <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+      <file file_name="main.c" />
+    </folder>
+    <folder Name="System Files">
+      <file file_name="thumb_crt0.s" />
+      <file file_name="LPC1100_Startup.s" />
+      <file file_name="$(TargetsDir)/LPC1000/LPC1100_Target.js">
+        <configuration Name="Common" file_type="Reset Script" />
+      </file>
+    </folder>
+    <folder Name="CMSIS Files">
+      <file file_name="$(TargetsDir)/LPC1000/include/CMSIS/LPC11xx.h" />
+      <file file_name="$(TargetsDir)/LPC1000/include/CMSIS/system_LPC11xx.h" />
+      <file file_name="$(TargetsDir)/LPC1000/include/CMSIS/system_LPC11xx.c" />
+    </folder>
+  </project>
+  <configuration
+    Name="THUMB Flash Debug"
+    inherited_configurations="THUMB;Flash;Debug" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration
+    Name="Flash"
+    c_preprocessor_definitions="__FLASH_BUILD"
+    hidden="Yes" />
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB Flash Release"
+    inherited_configurations="THUMB;Flash;Release" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="Level 1"
+    gcc_optimization_level="Level 3"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB RAM Debug"
+    inherited_configurations="THUMB;RAM;Debug" />
+  <configuration
+    Name="RAM"
+    c_preprocessor_definitions="__RAM_BUILD"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB RAM Release"
+    inherited_configurations="THUMB;RAM;Release" />
+</solution>
